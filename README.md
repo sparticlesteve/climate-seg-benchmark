@@ -18,6 +18,17 @@ Submission scripts are in `run_scripts`.
 To submit to the Cori KNL system, do
 
 ```bash
+# This example runs on 64 nodes.
 cd run_scripts
 sbatch -N 64 train_cori.sh
+```
+
+To submit to the Cori GPU system, do
+
+```bash
+# 8 ranks per node, 1 per GPU
+module purge
+module load esslurm
+cd run_scripts
+sbatch -N 4 train_corigpu.sh
 ```
