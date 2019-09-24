@@ -30,7 +30,6 @@ export OMP_PROC_BIND=spread
 export HDF5_USE_FILE_LOCKING=FALSE
 
 # Setup directories
-#datadir=$SCRATCH/climate-seg-benchmark/data
 datadir=/project/projectdirs/mpccc/tkurth/DataScience/gb2018/data/segm_h5_v3_new_split_maeve
 #datadir=/project/projectdirs/dasrepo/gb2018/tiramisu/segm_h5_v3_split
 scratchdir=${datadir} # no staging

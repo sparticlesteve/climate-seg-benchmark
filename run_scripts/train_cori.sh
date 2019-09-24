@@ -11,8 +11,8 @@
 do_stage=false
 do_train=true
 do_test=false
-numfiles_train=32
-numfiles_validation=32
+numfiles_train=-1
+numfiles_validation=-1
 numfiles_test=0
 num_epochs=1
 grad_lag=1
@@ -27,7 +27,8 @@ export KMP_AFFINITY="granularity=fine,compact,1,0"
 export MKLDNN_VERBOSE=0 #2 is very verbose
 
 # Setup directories
-datadir=/project/projectdirs/dasrepo/gb2018/tiramisu/segm_h5_v3_split
+datadir=/project/projectdirs/mpccc/tkurth/DataScience/gb2018/data/segm_h5_v3_new_split_maeve
+#datadir=/project/projectdirs/dasrepo/gb2018/tiramisu/segm_h5_v3_split
 scratchdir=$datadir # no staging
 #scratchdir=${DW_PERSISTENT_STRIPED_DeepCAM}/$(whoami)
 run_dir=$SCRATCH/climate-seg-benchmark/run_cori/run_n${SLURM_NNODES}_j${SLURM_JOBID}
