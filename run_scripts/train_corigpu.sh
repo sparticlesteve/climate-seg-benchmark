@@ -4,6 +4,7 @@
 #SBATCH --gres=gpu:8
 #SBATCH --exclusive
 #SBATCH -t 08:00:00
+#SBATCH -o %x-%j.out
 
 # Job parameters
 rankspernode=8

@@ -3,6 +3,7 @@
 #SBATCH -C knl
 #SBATCH -q debug
 #SBATCH -t 30
+#SBATCH -o %x-%j.out
 
 ##SBATCH -S 2
 ##DW persistentdw name=DeepCAM
