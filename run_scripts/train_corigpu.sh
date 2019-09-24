@@ -42,6 +42,7 @@ mkdir -p ${run_dir}
 cp stage_in_parallel.sh ${run_dir}/
 cp ../utils/parallel_stagein.py ${run_dir}/
 cp ../utils/graph_flops.py ${run_dir}/
+cp ../utils/tracehook.py ${run_dir}/
 cp ../utils/common_helpers.py ${run_dir}/
 cp ../utils/data_helpers.py ${run_dir}/
 cp ../deeplab-tf/deeplab-tf-train.py ${run_dir}/
