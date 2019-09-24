@@ -10,14 +10,14 @@ rankspernode=8
 do_stage=true
 do_train=true
 do_test=false
-numfiles_train=32768 #-1
-numfiles_validation=8192 #-1
+numfiles_train=-1
+numfiles_validation=-1
 numfiles_test=0
 num_epochs=32
-grad_lag=0
-prec=32 #16
-batch=1
-scale_factor=1.0 #0.1
+grad_lag=1
+prec=16
+batch=2
+scale_factor=0.1
 
 # Software setup
 module load gcc/7.3.0
