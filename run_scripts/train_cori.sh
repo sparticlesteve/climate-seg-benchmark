@@ -4,8 +4,6 @@
 #SBATCH -q debug
 #SBATCH -t 30
 
-##SBATCH -q regular
-##SBATCH -C knl
 ##SBATCH -S 2
 ##DW persistentdw name=DeepCAM
 
@@ -32,7 +30,7 @@ export MKLDNN_VERBOSE=0 #2 is very verbose
 datadir=/project/projectdirs/dasrepo/gb2018/tiramisu/segm_h5_v3_split
 scratchdir=$datadir # no staging
 #scratchdir=${DW_PERSISTENT_STRIPED_DeepCAM}/$(whoami)
-run_dir=$SCRATCH/climseg-benchmark/run/run_n${SLURM_NNODES}_j${SLURM_JOBID}
+run_dir=$SCRATCH/climate-seg-benchmark/run_cori/run_n${SLURM_NNODES}_j${SLURM_JOBID}
 mkdir -p ${run_dir}
 
 # Prepare the run directory
