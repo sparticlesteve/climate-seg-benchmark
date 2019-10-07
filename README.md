@@ -7,7 +7,14 @@ https://arxiv.org/abs/1810.01993
 
 ## How to get the data
 
-Details forthcoming
+For now there is a smaller dataset (~200GB total) available to get things started.
+It is hosted via Globus:
+
+https://app.globus.org/file-manager?origin_id=bf7316d8-e918-11e9-9bfc-0a19784404f4&origin_path=%2F
+
+and also available via https:
+
+https://portal.nersc.gov/project/dasrepo/deepcam/climseg-data-small/
 
 ## How to run the benchmark
 
