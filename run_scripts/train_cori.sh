@@ -3,6 +3,7 @@
 #SBATCH -C knl
 #SBATCH -q debug
 #SBATCH -t 30
+#SBATCH -d singleton
 #SBATCH -o %x-%j.out
 
 ##SBATCH -S 2
@@ -10,26 +11,45 @@
 
 # Job parameters
 do_stage=false
-do_train=true
-do_test=false
-numfiles_train=-1
-numfiles_validation=-1
-numfiles_test=0
-num_epochs=1
+ntrain=-1
+nvalid=-1
+ntest=0
+batch=1
+epochs=1
 grad_lag=1
+scale_factor=1.0
+
+# Parse command line options
+while (( "$#" )); do
+    case "$1" in
+        --ntrain)
+            ntrain=$2
+            shift 2
+            ;;
+        --nvalid)
+            nvalid=$2
+            shift 2
+            ;;
+        --ntest)
+            ntest=$2
+            shift 2
+            ;;
+        -*|--*=)
+            echo "Error: Unsupported flag $1" >&2
+            exit 1
+            ;;
+    esac
+done
 
 # Setup software
 module load tensorflow/intel-1.13.1-py36
 export OMP_NUM_THREADS=66
-# Trying a different OMP config, mainly just to silence verbosity
 export KMP_AFFINITY="granularity=fine,compact,1,0"
-#export OMP_PLACES=threads
-#export OMP_PROC_BIND=spread
 export MKLDNN_VERBOSE=0 #2 is very verbose
+export HDF5_USE_FILE_LOCKING=FALSE
 
 # Setup directories
-datadir=/project/projectdirs/mpccc/tkurth/DataScience/gb2018/data/segm_h5_v3_new_split_maeve
-#datadir=/project/projectdirs/dasrepo/gb2018/tiramisu/segm_h5_v3_split
+datadir=/project/projectdirs/dasrepo/gsharing/climseg-benchmark/climseg-data-small
 scratchdir=$datadir # no staging
 #scratchdir=${DW_PERSISTENT_STRIPED_DeepCAM}/$(whoami)
 run_dir=$SCRATCH/climate-seg-benchmark/run_cori/run_n${SLURM_NNODES}_j${SLURM_JOBID}
@@ -50,8 +70,9 @@ cd ${run_dir}
 # Stage data if relevant
 if [ "${scratchdir}" != "${datadir}" ]; then
     if $do_stage; then
-        #cmd="srun -N ${SLURM_NNODES} -n ${SLURM_NNODES} -c 264 ./stage_in_parallel.sh ${datadir} ${scratchdir} ${numfiles_train} ${numfiles_validation} ${numfiles_test}"
-        cmd="srun -N 1 -n 1 -c 264 ./stage_in_parallel.sh ${datadir} ${scratchdir} ${numfiles_train} ${numfiles_validation} ${numfiles_test}"
+        # Multi-node staging wasn't working for me.
+        #cmd="srun -N ${SLURM_NNODES} -n ${SLURM_NNODES} -c 264 ./stage_in_parallel.sh ${datadir} ${scratchdir} ${ntrain} ${nvalid} ${ntest}"
+        cmd="srun -N 1 -n 1 -c 264 ./stage_in_parallel.sh ${datadir} ${scratchdir} ${ntrain} ${nvalid} ${ntest}"
 	echo ${cmd}
 	${cmd}
     fi
@@ -60,7 +81,7 @@ else
 fi
 
 # Run the training
-if $do_train; then
+if [ $ntrain -ne 0 ]; then
     echo "Starting Training"
     runid=0
     runfiles=$(ls -latr out.lite.fp32.lag${grad_lag}.train.run* | tail -n1 | awk '{print $9}')
@@ -70,19 +91,19 @@ if $do_train; then
 
     srun python -u ./deeplab-tf-train.py \
         --datadir_train ${scratchdir}/train \
-        --train_size ${numfiles_train} \
+        --train_size ${ntrain} \
         --datadir_validation ${scratchdir}/validation \
-        --validation_size ${numfiles_validation} \
-        --downsampling 2 \
-        --channels 0 1 2 10 \
+        --validation_size ${nvalid} \
+        #--downsampling 2 \
+        #--channels 0 1 2 10 \
         --chkpt_dir checkpoint.fp32.lag${grad_lag} \
-        --epochs ${num_epochs} \
+        --epochs ${epochs} \
         --fs global \
         --loss weighted_mean \
         --optimizer opt_type=LARC-Adam,learning_rate=0.0001,gradient_lag=${grad_lag} \
         --model=resnet_v2_50 \
-        --scale_factor 1.0 \
-        --batch 1 \
+        --scale_factor $scale_factor \
+        --batch $batch \
         --decoder=deconv1x \
         --device "/device:cpu:0" \
         --label_id 0 \
@@ -92,7 +113,7 @@ if $do_train; then
         --data_format "channels_last" |& tee out.lite.fp32.lag${grad_lag}.train.run${runid}
 fi
 
-if $do_test; then
+if [ $ntest -ne 0 ]; then
     echo "Starting Testing"
     runid=0
     runfiles=$(ls -latr out.lite.fp32.lag${grad_lag}.test.run* | tail -n1 | awk '{print $9}')
@@ -102,17 +123,17 @@ if $do_test; then
 
     python -u ./deeplab-tf-inference.py \
         --datadir_test ${scratchdir}/test \
-        --test_size ${numfiles_test} \
-        --downsampling 2 \
-        --channels 0 1 2 10 \
+        --test_size ${ntest} \
+        #--downsampling 2 \
+        #--channels 0 1 2 10 \
         --chkpt_dir checkpoint.fp32.lag${grad_lag} \
         --output_graph deepcam_inference.pb \
         --output output_test \
         --fs "local" \
         --loss weighted_mean \
         --model=resnet_v2_50 \
-        --scale_factor 1.0 \
-        --batch 1 \
+        --scale_factor $scale_factor \
+        --batch $batch \
         --decoder=deconv1x \
         --device "/device:cpu:0" \
         --label_id 0 \
