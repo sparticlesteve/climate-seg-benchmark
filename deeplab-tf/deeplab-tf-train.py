@@ -400,7 +400,6 @@ def main(device, input_path_train, input_path_validation, downsampling_fact, dow
                     r_peak = max(r_peak, r_inst)
 
                     #print step report
-                    eff_steps = train_steps_in_epoch if (train_steps_in_epoch > 0) else num_steps_per_epoch
                     if (train_steps % loss_print_interval) == 0:
                         if "gpu" in device.lower():
                             mem_used = sess.run(mem_usage_ops)

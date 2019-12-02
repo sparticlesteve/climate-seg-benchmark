@@ -154,7 +154,7 @@ def deeplab_v3_plus_generator(num_classes,
         net = end_points[base_architecture + '/block4']
         encoder_output = atrous_spatial_pyramid_pooling(net, output_stride, batch_norm_decay, is_training, model_arg_scope=model_arg_scope)
         
-        print("encoder out shape: ",encoder_output.shape)
+        #print("encoder out shape: ",encoder_output.shape)
         
         #make sure it is channels last!!!!
         decoder_fmt = "NHWC"
