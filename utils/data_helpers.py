@@ -271,7 +271,7 @@ def load_data(input_path, shuffle=True, max_files=-1, use_horovod=True):
     files = sorted([x for x in os.listdir(input_path) if "data" in x])
 
     #we will choose to load only the first p files
-    if max_files > 0:
+    if max_files >= 0:
         files = files[:max_files]
 
     #convert to numpy
