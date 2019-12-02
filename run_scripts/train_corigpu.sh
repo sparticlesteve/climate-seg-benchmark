@@ -8,7 +8,7 @@
 #SBATCH -o %x-%j.out
 
 # Job parameters
-do_stage=true
+do_stage=false
 ranks_per_node=8
 ntrain=-1
 nvalid=-1
@@ -18,6 +18,7 @@ epochs=64
 prec=16
 grad_lag=1
 scale_factor=0.1
+loss_type=weighted #weighted_mean
 
 # Parse command line options
 while (( "$#" )); do
@@ -32,6 +33,10 @@ while (( "$#" )); do
             ;;
         --ntest)
             ntest=$2
+            shift 2
+            ;;
+        --epochs)
+            epochs=$2
             shift 2
             ;;
         -*|--*=)
@@ -93,11 +98,11 @@ if [ $ntrain -ne 0 ]; then
         --disable_checkpoint \
         --epochs $epochs \
         --fs global \
-        --loss weighted \
+        --loss $loss_type \
         --optimizer opt_type=LARC-Adam,learning_rate=0.0001,gradient_lag=${grad_lag} \
         --model "resnet_v2_50" \
-        --scale_factor ${scale_factor} \
-        --batch ${batch} \
+        --scale_factor $scale_factor \
+        --batch $batch \
         --decoder "deconv1x" \
         --device "/device:cpu:0" \
         --dtype "float${prec}" \
@@ -114,10 +119,10 @@ if [ $ntest -ne 0 ]; then
         --output_graph deepcam_inference.pb \
         --output output_test_5 \
         --fs "local" \
-        --loss weighted \
+        --loss $loss_type \
         --model "resnet_v2_50" \
-        --scale_factor ${scale_factor} \
-        --batch ${batch} \
+        --scale_factor $scale_factor \
+        --batch $batch \
         --decoder "deconv1x" \
         --device "/device:cpu:0" \
         --dtype "float${prec}" \
