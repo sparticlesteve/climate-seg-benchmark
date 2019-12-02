@@ -43,10 +43,14 @@ done
 
 # Setup software
 module load tensorflow/intel-1.13.1-py36
-export OMP_NUM_THREADS=66
+export OMP_NUM_THREADS=68
 export KMP_AFFINITY="granularity=fine,compact,1,0"
 export MKLDNN_VERBOSE=0 #2 is very verbose
 export HDF5_USE_FILE_LOCKING=FALSE
+# Testing settings
+export KMP_BLOCKTIME=0
+intra_threads=68
+inter_threads=2
 
 # Setup directories
 datadir=/project/projectdirs/dasrepo/gsharing/climseg-benchmark/climseg-data-small
@@ -107,6 +111,8 @@ if [ $ntrain -ne 0 ]; then
         --decoder=deconv1x \
         --device "/device:cpu:0" \
         --label_id 0 \
+        --intra_threads $intra_threads \
+        --inter_threads $inter_threads \
         --disable_imsave \
         --tracing="2:5" \
         --trace_dir="./" \
@@ -137,5 +143,7 @@ if [ $ntest -ne 0 ]; then
         --decoder=deconv1x \
         --device "/device:cpu:0" \
         --label_id 0 \
+        --intra_threads $intra_threads \
+        --inter_threads $inter_threads \
         --data_format "channels_last" |& tee out.lite.fp32.lag${grad_lag}.test.run${runid}
 fi

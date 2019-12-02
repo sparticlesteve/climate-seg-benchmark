@@ -63,7 +63,11 @@ class StoreDictKeyPair(argparse.Action):
 
 
 #main function
-def main(device, input_path_train, input_path_validation, downsampling_fact, downsampling_mode, channels, data_format, label_id, weights, image_dir, checkpoint_dir, trn_sz, val_sz, loss_type, model, decoder, fs_type, optimizer, batch, batchnorm, num_epochs, dtype, disable_checkpoints, disable_imsave, tracing, trace_dir, output_sampling, scale_factor):
+def main(device, input_path_train, input_path_validation, downsampling_fact, downsampling_mode,
+         channels, data_format, label_id, weights, image_dir, checkpoint_dir, trn_sz, val_sz,
+         loss_type, model, decoder, fs_type, optimizer, batch, batchnorm, num_epochs, dtype,
+         disable_checkpoints, disable_imsave, tracing, trace_dir, output_sampling, scale_factor,
+         intra_threads, inter_threads):
     #init horovod
     comm_rank = 0
     comm_local_rank = 0
@@ -91,8 +95,8 @@ def main(device, input_path_train, input_path_validation, downsampling_fact, dow
     loss_print_interval = 1
 
     #session config
-    sess_config=tf.ConfigProto(inter_op_parallelism_threads=6, #6
-                               intra_op_parallelism_threads=1, #1
+    sess_config=tf.ConfigProto(inter_op_parallelism_threads=inter_threads, #6
+                               intra_op_parallelism_threads=intra_threads, #1
                                log_device_placement=False,
                                allow_soft_placement=True)
     sess_config.gpu_options.visible_device_list = str(comm_local_rank)
@@ -510,9 +514,13 @@ if __name__ == '__main__':
     AP.add_argument("--scale_factor",default=0.1,type=float,help="Factor used to scale loss.")
     AP.add_argument("--device", default="/device:gpu:0",help="Which device to count the allocated memory on.")
     AP.add_argument("--data_format", default="channels_first",help="Which data format shall be picked [channels_first, channels_last].")
-    AP.add_argument("--label_id", type=int, default=None, help="Allows to select a certain label out of a multi-channel labeled data, \
+    AP.add_argument("--label_id", type=int, default=None,
+                    help="Allows to select a certain label out of a multi-channel labeled data, \
                     where each channel presents a different label (e.g. for fuzzy labels). \
                     If set to None, the selection will be randomized [None].")
+    # These are Thorsten's default; not sure they make sense
+    AP.add_argument("--intra_threads", type=int, default=1, help='intra-op parallelism thread setting')
+    AP.add_argument("--inter_threads", type=int, default=6, help='inter-op parallelism thread setting')
     parsed = AP.parse_args()
 
     #play with weighting
@@ -554,4 +562,6 @@ if __name__ == '__main__':
          tracing=parsed.tracing,
          trace_dir=parsed.trace_dir,
          output_sampling=parsed.sampling,
-         scale_factor=parsed.scale_factor)
+         scale_factor=parsed.scale_factor,
+         intra_threads=parsed.intra_threads,
+         inter_threads=parsed.inter_threads)
