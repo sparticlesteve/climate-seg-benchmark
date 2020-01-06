@@ -47,9 +47,6 @@ while (( "$#" )); do
 done
 
 # Software setup
-module load gcc/7.3.0
-module load cuda/10.1.168
-module load mpich/3.3.1-debug
 module load tensorflow/gpu-1.14.0-py37
 export OMP_NUM_THREADS=$(( 40 / ${ranks_per_node} ))
 export OMP_PLACES=threads
