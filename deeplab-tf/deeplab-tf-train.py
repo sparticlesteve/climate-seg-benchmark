@@ -375,6 +375,7 @@ def main(device, input_path_train, input_path_validation, downsampling_fact, dow
 
             #start training
             start_time = time.time()
+            print('Begin training loop')
             while not sess.should_stop():
 
                 #training loop
@@ -482,6 +483,8 @@ def main(device, input_path_train, input_path_validation, downsampling_fact, dow
         # write any cached traces to disk
         if tracing is not None:
             tracing_hook.write_traces()
+
+    print('All done')
 
 if __name__ == '__main__':
     AP = argparse.ArgumentParser()
