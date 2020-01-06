@@ -18,6 +18,18 @@ plot_colormap = np.array([[[  0,  0,  0],  #   0      0     black
                       [255,255,255]],      #   2      2     white
                      ])
 
+def create_dummy_dataset(n_samples, batchsize, num_epochs, dtype, n_unique=1):
+    # Hardcoded shapes for now
+    input_shape = [16, 768, 1152]
+    target_shape = [768, 1152]
+    x = tf.random.uniform([n_unique] + input_shape, dtype=dtype)
+    y = tf.random.uniform([n_unique] + target_shape, maxval=2, dtype=tf.int32)
+    w = tf.constant(1, shape=[n_unique]+target_shape, dtype=dtype)
+    #w = tf.random.uniform([n_unique] + target_shape, dtype=dtype)
+    s = tf.convert_to_tensor(['dummy-{}'.format(i) for i in range(n_unique)])
+    data = tf.data.Dataset.from_tensor_slices((x, y, w, s))
+    data = data.shuffle(4).repeat(n_samples).repeat(num_epochs)
+    return data.batch(batchsize)
 
 def create_dataset(h5ir, datafilelist, batchsize, num_epochs, comm_size, comm_rank, dtype, shuffle=False):
     if comm_size > 1:

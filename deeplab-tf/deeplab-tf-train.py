@@ -63,8 +63,9 @@ class StoreDictKeyPair(argparse.Action):
 
 
 #main function
-def main(device, input_path_train, input_path_validation, downsampling_fact, downsampling_mode,
-         channels, data_format, label_id, weights, image_dir, checkpoint_dir, trn_sz, val_sz,
+def main(device, input_path_train, input_path_validation, dummy_data,
+         downsampling_fact, downsampling_mode, channels, data_format,
+         label_id, weights, image_dir, checkpoint_dir, trn_sz, val_sz,
          loss_type, model, decoder, fs_type, optimizer, batch, batchnorm, num_epochs, dtype,
          disable_checkpoints, disable_imsave, tracing, trace_dir, output_sampling, scale_factor,
          intra_threads, inter_threads):
@@ -129,6 +130,8 @@ def main(device, input_path_train, input_path_validation, downsampling_fact, dow
             print("Solver Parameters: {k}: {v}".format(k=k,v=v))
         print("Num training samples: {}".format(train_files.shape[0]))
         print("Num validation samples: {}".format(valid_files.shape[0]))
+        if dummy_data:
+            print("Using synthetic dummy data")
         print("Disable checkpoints: {}".format(disable_checkpoints))
         print("Disable image save: {}".format(disable_imsave))
 
@@ -144,16 +147,21 @@ def main(device, input_path_train, input_path_validation, downsampling_fact, dow
                                                        num_steps_per_epoch))
 
     with training_graph.as_default():
-        #create readers
-        trn_reader = h5_input_reader(input_path_train, channels, weights, dtype, normalization_file="stats.h5", update_on_read=False, data_format=data_format, label_id=label_id, sample_target=output_sampling)
-        val_reader = h5_input_reader(input_path_validation, channels, weights, dtype, normalization_file="stats.h5", update_on_read=False, data_format=data_format, label_id=label_id)
-        #create datasets
-        if fs_type == "local":
-            trn_dataset = create_dataset(trn_reader, train_files, batch, num_epochs, comm_local_size, comm_local_rank, dtype, shuffle=True)
-            val_dataset = create_dataset(val_reader, valid_files, batch, 1, comm_local_size, comm_local_rank, dtype, shuffle=False)
+
+        if dummy_data:
+            trn_dataset = create_dummy_dataset(n_samples=trn_sz, batchsize=batch, num_epochs=num_epochs, dtype=dtype)
+            val_dataset = create_dummy_dataset(n_samples=val_sz, batchsize=batch, num_epochs=1, dtype=dtype)
         else:
-            trn_dataset = create_dataset(trn_reader, train_files, batch, num_epochs, comm_size, comm_rank, dtype, shuffle=True)
-            val_dataset = create_dataset(val_reader, valid_files, batch, 1, comm_size, comm_rank, dtype, shuffle=False)
+            #create readers
+            trn_reader = h5_input_reader(input_path_train, channels, weights, dtype, normalization_file="stats.h5", update_on_read=False, data_format=data_format, label_id=label_id, sample_target=output_sampling)
+            val_reader = h5_input_reader(input_path_validation, channels, weights, dtype, normalization_file="stats.h5", update_on_read=False, data_format=data_format, label_id=label_id)
+            #create datasets
+            if fs_type == "local":
+                trn_dataset = create_dataset(trn_reader, train_files, batch, num_epochs, comm_local_size, comm_local_rank, dtype, shuffle=True)
+                val_dataset = create_dataset(val_reader, valid_files, batch, 1, comm_local_size, comm_local_rank, dtype, shuffle=False)
+            else:
+                trn_dataset = create_dataset(trn_reader, train_files, batch, num_epochs, comm_size, comm_rank, dtype, shuffle=True)
+                val_dataset = create_dataset(val_reader, valid_files, batch, 1, comm_size, comm_rank, dtype, shuffle=False)
 
         #create iterators
         handle = tf.placeholder(tf.string, shape=[], name="iterator-placeholder")
@@ -494,6 +502,7 @@ if __name__ == '__main__':
     AP.add_argument("--loss",default="weighted",choices=["weighted","weighted_mean","focal"],type=str, help="Which loss type to use. Supports weighted, focal [weighted]")
     AP.add_argument("--datadir_train",type=str,help="Path to training data")
     AP.add_argument("--datadir_validation",type=str,help="Path to validation data")
+    AP.add_argument("--dummy_data", action="store_true", help="Use synthetic data instead of real data")
     AP.add_argument("--channels",default=[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15],type=int, nargs='*',help="Channels from input images fed to the network. List of numbers between 0 and 15")
     AP.add_argument("--fs",type=str,default="local",help="File system flag: global or local are allowed [local]")
     AP.add_argument("--optimizer",action=StoreDictKeyPair)
@@ -536,6 +545,7 @@ if __name__ == '__main__':
     main(device=parsed.device,
          input_path_train=parsed.datadir_train,
          input_path_validation=parsed.datadir_validation,
+         dummy_data=parsed.dummy_data,
          downsampling_fact=parsed.downsampling,
          downsampling_mode=parsed.downsampling_mode,
          channels=parsed.channels,
