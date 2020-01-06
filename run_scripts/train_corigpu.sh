@@ -54,7 +54,7 @@ export OMP_PROC_BIND=spread
 export HDF5_USE_FILE_LOCKING=FALSE
 
 # Setup directories
-datadir=/project/projectdirs/dasrepo/gsharing/climseg-benchmark/climseg-data-small
+datadir=/global/cscratch1/sd/sfarrell/climate-seg-benchmark/data/climseg_data
 scratchdir=${datadir} # no staging
 run_dir=$SCRATCH/climate-seg-benchmark/run_cgpu/run_n${SLURM_NNODES}_j${SLURM_JOBID}
 mkdir -p ${run_dir}
