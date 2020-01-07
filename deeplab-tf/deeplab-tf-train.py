@@ -106,12 +106,8 @@ def main(device, input_path_train, input_path_validation, downsampling_fact, dow
     training_graph = tf.Graph()
     if comm_rank == 0:
         print("Loading data...")
-    trn_data = load_data(input_path_train, True, trn_sz, horovod)
-    val_data = load_data(input_path_validation, False, val_sz, horovod)
-    if comm_rank == 0:
-        print("Shape of trn_data is {}".format(trn_data.shape[0]))
-        print("Shape of val_data is {}".format(val_data.shape[0]))
-        print("done.")
+    train_files = load_data(input_path_train, True, trn_sz, horovod)
+    valid_files = load_data(input_path_validation, False, val_sz, horovod)
 
     #print some stats
     if comm_rank==0:
@@ -131,16 +127,16 @@ def main(device, input_path_train, input_path_validation, downsampling_fact, dow
         #print optimizer parameters
         for k,v in optimizer.items():
             print("Solver Parameters: {k}: {v}".format(k=k,v=v))
-        print("Num training samples: {}".format(trn_data.shape[0]))
-        print("Num validation samples: {}".format(val_data.shape[0]))
+        print("Num training samples: {}".format(train_files.shape[0]))
+        print("Num validation samples: {}".format(valid_files.shape[0]))
         print("Disable checkpoints: {}".format(disable_checkpoints))
         print("Disable image save: {}".format(disable_imsave))
 
     #compute epochs and stuff:
     if fs_type == "local":
-        num_samples = trn_data.shape[0] // comm_local_size
+        num_samples = train_files.shape[0] // comm_local_size
     else:
-        num_samples = trn_data.shape[0] // comm_size
+        num_samples = train_files.shape[0] // comm_size
     num_steps_per_epoch = num_samples // batch
     num_steps = num_epochs*num_steps_per_epoch
     if per_rank_output:
@@ -153,11 +149,11 @@ def main(device, input_path_train, input_path_validation, downsampling_fact, dow
         val_reader = h5_input_reader(input_path_validation, channels, weights, dtype, normalization_file="stats.h5", update_on_read=False, data_format=data_format, label_id=label_id)
         #create datasets
         if fs_type == "local":
-            trn_dataset = create_dataset(trn_reader, trn_data, batch, num_epochs, comm_local_size, comm_local_rank, dtype, shuffle=True)
-            val_dataset = create_dataset(val_reader, val_data, batch, 1, comm_local_size, comm_local_rank, dtype, shuffle=False)
+            trn_dataset = create_dataset(trn_reader, train_files, batch, num_epochs, comm_local_size, comm_local_rank, dtype, shuffle=True)
+            val_dataset = create_dataset(val_reader, valid_files, batch, 1, comm_local_size, comm_local_rank, dtype, shuffle=False)
         else:
-            trn_dataset = create_dataset(trn_reader, trn_data, batch, num_epochs, comm_size, comm_rank, dtype, shuffle=True)
-            val_dataset = create_dataset(val_reader, val_data, batch, 1, comm_size, comm_rank, dtype, shuffle=False)
+            trn_dataset = create_dataset(trn_reader, train_files, batch, num_epochs, comm_size, comm_rank, dtype, shuffle=True)
+            val_dataset = create_dataset(val_reader, valid_files, batch, 1, comm_size, comm_rank, dtype, shuffle=False)
 
         #create iterators
         handle = tf.placeholder(tf.string, shape=[], name="iterator-placeholder")
