@@ -27,7 +27,7 @@ import time
 
 # suppress tensorflow warnings
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
-tf.logging.set_verbosity(tf.logging.ERROR)
+tf.compat.v1.logging.set_verbosity(tf.compat.v1.logging.ERROR)
 
 #horovod, yes or no?
 horovod=True
