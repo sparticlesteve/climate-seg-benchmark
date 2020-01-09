@@ -47,7 +47,7 @@ while (( "$#" )); do
 done
 
 # Setup software
-module load tensorflow/intel-1.13.1-py36
+module load tensorflow/intel-1.15.0-py37
 export OMP_NUM_THREADS=68
 export KMP_AFFINITY="granularity=fine,compact,1,0"
 export MKLDNN_VERBOSE=0 #2 is very verbose

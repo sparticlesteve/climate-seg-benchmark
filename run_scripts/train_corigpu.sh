@@ -47,7 +47,7 @@ while (( "$#" )); do
 done
 
 # Software setup
-module load tensorflow/gpu-1.14.0-py37
+module load tensorflow/gpu-1.15.0-py37
 export OMP_NUM_THREADS=$(( 40 / ${ranks_per_node} ))
 export OMP_PLACES=threads
 export OMP_PROC_BIND=spread
