@@ -58,7 +58,7 @@ intra_threads=68
 inter_threads=2
 
 # Setup directories
-datadir=/global/cscratch1/sd/sfarrell/climate-seg-benchmark/data/climseg_data
+datadir=/global/cscratch1/sd/sfarrell/climate-seg-benchmark/data/climseg-data-duplicated
 #datadir=/project/projectdirs/dasrepo/gsharing/climseg-benchmark/climseg-data-small
 scratchdir=$datadir # no staging
 #scratchdir=${DW_PERSISTENT_STRIPED_DeepCAM}/$(whoami)
