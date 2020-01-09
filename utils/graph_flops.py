@@ -74,8 +74,8 @@ def graph_flops(g = None, batch = 1, format = 'NCHW', targets = None,
             #print o.name, o.inputs[2], o.inputs[1], o.outputs[0]
             fmt = o.get_attr('data_format').decode("utf-8")
             #assert(fmt == format)
-            if format != fmt:
-                print('WARNING: tensor format ({}) does not match expected ({})'.format(fmt, format))
+            #if format != fmt:
+            #    print('WARNING: tensor format ({}) does not match expected ({})'.format(fmt, format))
             strides = o.get_attr('strides')
             padding = o.get_attr('padding').lower()
             in_size = o.inputs[2].shape.as_list()
