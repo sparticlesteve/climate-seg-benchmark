@@ -1,15 +1,15 @@
 #!/bin/bash
 #SBATCH -J climseg-cgpu
 #SBATCH -C gpu
+#SBATCH --ntasks-per-node=8
 #SBATCH --gres=gpu:8
 #SBATCH --exclusive
 #SBATCH -d singleton
-#SBATCH -t 08:00:00
+#SBATCH -t 4:00:00
 #SBATCH -o %x-%j.out
 
 # Job parameters
 do_stage=false
-ranks_per_node=8
 ntrain=-1
 nvalid=-1
 ntest=0
@@ -48,13 +48,12 @@ done
 
 # Software setup
 module load tensorflow/gpu-1.15.0-py37
-export OMP_NUM_THREADS=$(( 40 / ${ranks_per_node} ))
 export OMP_PLACES=threads
 export OMP_PROC_BIND=spread
 export HDF5_USE_FILE_LOCKING=FALSE
 
 # Setup directories
-datadir=/global/cscratch1/sd/sfarrell/climate-seg-benchmark/data/climseg_data
+datadir=/global/cscratch1/sd/sfarrell/climate-seg-benchmark/data/climseg-data-duplicated
 scratchdir=${datadir} # no staging
 run_dir=$SCRATCH/climate-seg-benchmark/run_cgpu/run_n${SLURM_NNODES}_j${SLURM_JOBID}
 mkdir -p ${run_dir}
@@ -83,10 +82,9 @@ else
 fi
 
 # Run the training
-sruncmd="srun -u --mpi=pmi2 -N ${SLURM_NNODES} -n $(( ${SLURM_NNODES} * ${ranks_per_node} )) -c $(( 80 / ${ranks_per_node} )) --cpu_bind=cores"
 if [ $ntrain -ne 0 ]; then
     echo "Starting Training"
-    ${sruncmd} python -u ./deeplab-tf-train.py \
+    srun -u --cpu_bind=cores python -u deeplab-tf-train.py \
         --datadir_train ${scratchdir}/train \
         --train_size ${ntrain} \
         --datadir_validation ${scratchdir}/validation \
@@ -109,7 +107,7 @@ fi
 
 if [ $ntest -ne 0 ]; then
     echo "Starting Testing"
-    ${sruncmd} python -u ./deeplab-tf-inference.py \
+    srun -u --cpu_bind=cores python -u deeplab-tf-inference.py \
         --datadir_test ${scratchdir}/test \
         --chkpt_dir checkpoint.fp${prec}.lag${grad_lag} \
         --test_size ${ntest} \
