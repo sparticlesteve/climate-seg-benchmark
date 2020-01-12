@@ -18,9 +18,13 @@ plot_colormap = np.array([[[  0,  0,  0],  #   0      0     black
                       [255,255,255]],      #   2      2     white
                      ])
 
-def create_dummy_dataset(n_samples, batchsize, num_epochs, dtype, n_unique=1):
+def create_dummy_dataset(n_samples, batchsize, num_epochs, dtype,
+                         data_format='channels_first', n_unique=1):
     # Hardcoded shapes for now
-    input_shape = [16, 768, 1152]
+    if data_format == 'channels_first':
+        input_shape = [16, 768, 1152]
+    else:
+        input_shape = [768, 1152, 16]
     target_shape = [768, 1152]
     x = tf.random.uniform([n_unique] + input_shape, dtype=dtype)
     y = tf.random.uniform([n_unique] + target_shape, maxval=2, dtype=tf.int32)
