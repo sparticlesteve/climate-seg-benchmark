@@ -39,6 +39,10 @@ while (( "$#" )); do
             epochs=$2
             shift 2
             ;;
+        --dummy)
+            other_train_opts="--dummy_data"
+            shift
+            ;;
         -*|--*=)
             echo "Error: Unsupported flag $1" >&2
             exit 1
@@ -95,7 +99,7 @@ fi
 if [ $ntrain -ne 0 ]; then
     echo "Starting Training"
     runid=0
-    runfiles=$(ls -latr out.lite.fp32.lag${grad_lag}.train.run* | tail -n1 | awk '{print $9}')
+    runfiles=$(ls -latr out.fp32.lag${grad_lag}.train.run* | tail -n1 | awk '{print $9}')
     if [ ! -z ${runfiles} ]; then
         runid=$(echo ${runfiles} | awk '{split($1,a,"run"); print a[1]+1}')
     fi
@@ -121,17 +125,16 @@ if [ $ntrain -ne 0 ]; then
         --disable_imsave \
         --tracing="2:5" \
         --trace_dir="./" \
-        --data_format "channels_last" |& tee out.lite.fp32.lag${grad_lag}.train.run${runid}
+        --data_format "channels_last" \
+        $other_train_opts |& tee out.fp32.lag${grad_lag}.train.run${runid}
         #--chkpt_dir checkpoint.fp32.lag${grad_lag} \
         #--downsampling 2 \
-        #--channels 0 1 2 10 \
-        #--loss weighted_mean \
 fi
 
 if [ $ntest -ne 0 ]; then
     echo "Starting Testing"
     runid=0
-    runfiles=$(ls -latr out.lite.fp32.lag${grad_lag}.test.run* | tail -n1 | awk '{print $9}')
+    runfiles=$(ls -latr out.fp32.lag${grad_lag}.test.run* | tail -n1 | awk '{print $9}')
     if [ ! -z ${runfiles} ]; then
         runid=$(echo ${runfiles} | awk '{split($1,a,"run"); print a[1]+1}')
     fi
@@ -152,7 +155,7 @@ if [ $ntest -ne 0 ]; then
         --label_id 0 \
         --intra_threads $intra_threads \
         --inter_threads $inter_threads \
-        --data_format "channels_last" |& tee out.lite.fp32.lag${grad_lag}.test.run${runid}
+        --data_format "channels_last" |& tee out.fp32.lag${grad_lag}.test.run${runid}
         #--downsampling 2 \
         #--channels 0 1 2 10 \
         #--loss weighted_mean \

@@ -39,6 +39,10 @@ while (( "$#" )); do
             epochs=$2
             shift 2
             ;;
+        --dummy)
+            other_train_opts="--dummy_data"
+            shift
+            ;;
         -*|--*=)
             echo "Error: Unsupported flag $1" >&2
             exit 1
@@ -102,7 +106,8 @@ if [ $ntrain -ne 0 ]; then
         --device "/device:cpu:0" \
         --dtype "float${prec}" \
         --label_id 0 \
-        --data_format "channels_first" |& tee out.fp${prec}.lag${grad_lag}.train
+        --data_format "channels_first" \
+        $other_train_opts |& tee out.fp${prec}.lag${grad_lag}.train
 fi
 
 if [ $ntest -ne 0 ]; then

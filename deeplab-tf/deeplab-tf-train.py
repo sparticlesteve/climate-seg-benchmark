@@ -149,8 +149,9 @@ def main(device, input_path_train, input_path_validation, dummy_data,
     with training_graph.as_default():
 
         if dummy_data:
-            trn_dataset = create_dummy_dataset(n_samples=trn_sz, batchsize=batch, num_epochs=num_epochs, dtype=dtype)
-            val_dataset = create_dummy_dataset(n_samples=val_sz, batchsize=batch, num_epochs=1, dtype=dtype)
+            dummy_data_args = dict(batchsize=batch, data_format=data_format, dtype=dtype)
+            trn_dataset = create_dummy_dataset(n_samples=trn_sz, num_epochs=num_epochs, **dummy_data_args)
+            val_dataset = create_dummy_dataset(n_samples=val_sz, num_epochs=1, **dummy_data_args)
         else:
             #create readers
             trn_reader = h5_input_reader(input_path_train, channels, weights, dtype, normalization_file="stats.h5", update_on_read=False, data_format=data_format, label_id=label_id, sample_target=output_sampling)
