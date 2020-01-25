@@ -115,7 +115,7 @@ def _h5_input_subprocess_reader(path, channels, weights, minvals, maxvals, updat
         data = f['climate']['data'][channels,:,:].astype(np.float32)
 
         #get label
-        label = f['climate']['labels'][...].astype(np.int32)
+        label = f['climate']['labels_0'][...].astype(np.int32)
 
     #do min/max normalization
     for c in range(len(channels)):

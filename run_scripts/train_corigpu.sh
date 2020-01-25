@@ -57,7 +57,8 @@ export OMP_PROC_BIND=spread
 export HDF5_USE_FILE_LOCKING=FALSE
 
 # Setup directories
-datadir=/global/cscratch1/sd/sfarrell/climate-seg-benchmark/data/climseg-data-duplicated
+#datadir=/global/cscratch1/sd/sfarrell/climate-seg-benchmark/data/climseg-data-duplicated
+datadir=/global/cscratch1/sd/sfarrell/climate-seg-benchmark/data/climseg-data-2020
 scratchdir=${datadir} # no staging
 run_dir=$SCRATCH/climate-seg-benchmark/run_cgpu/run_n${SLURM_NNODES}_j${SLURM_JOBID}
 mkdir -p ${run_dir}
