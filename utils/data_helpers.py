@@ -122,8 +122,11 @@ def _h5_input_subprocess_reader(path, channels, weights, minvals, maxvals, updat
         data[c,:,:] = (data[c,:,:]-minvals[c])/(maxvals[c]-minvals[c])
     
     #transpose if necessary
-    if data_format == "channels_last":
-        data = np.transpose(data, [1,2,0])
+    if data_format == 'channels_first':
+        data = np.transpose(data, [2,0,1])
+    #if data_format == "channels_last":
+    #    data = np.transpose(data, [1,2,0])
+    print('TEST', data_format, data.shape)
 
     #if new dataset is used, label has a batch index.
     #just take the first entry for the moment
@@ -234,8 +237,10 @@ class h5_input_reader(object):
         if profile: timers["norm"] += time.time()
 
         if profile: timers["transpose"] = -time.time()
-        if self.data_format == "channels_last":
-            data = np.transpose(data, [1,2,0])
+        if data_format == 'channels_first':
+            data = np.transpose(data, [2,0,1])
+        #if self.data_format == "channels_last":
+        #    data = np.transpose(data, [1,2,0])
         if profile: timers["transpose"] += time.time()
 
         #if new dataset is used, label has a batch index.
