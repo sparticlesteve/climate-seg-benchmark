@@ -65,7 +65,7 @@ class StoreDictKeyPair(argparse.Action):
 #main function
 def main(device, input_path_train, input_path_validation, dummy_data,
          downsampling_fact, downsampling_mode, channels, data_format,
-         label_id, weights, image_dir, checkpoint_dir, trn_sz, val_sz,
+         label_id, weights, image_dir, checkpoint_dir, checkpoint_interval, trn_sz, val_sz,
          loss_type, model, decoder, fs_type, optimizer, batch, batchnorm, num_epochs, dtype,
          disable_checkpoints, disable_imsave, tracing, trace_dir, output_sampling, scale_factor,
          intra_threads, inter_threads):
@@ -330,10 +330,11 @@ def main(device, input_path_train, input_path_validation, dummy_data,
 
         #checkpointing
         if comm_rank == 0:
-            checkpoint_save_freq = 5*num_steps_per_epoch
-            checkpoint_saver = tf.train.Saver(max_to_keep = 1000)
+            checkpoint_saver = tf.train.Saver(max_to_keep=1000)
             if (not disable_checkpoints):
-                hooks.append(tf.train.CheckpointSaverHook(checkpoint_dir=checkpoint_dir, save_steps=checkpoint_save_freq, saver=checkpoint_saver))
+                hooks.append(tf.train.CheckpointSaverHook(checkpoint_dir=checkpoint_dir,
+                                                          save_steps=checkpoint_interval,
+                                                          saver=checkpoint_saver))
             #create image dir if not exists
             if not os.path.isdir(image_dir):
                 os.makedirs(image_dir)
@@ -495,6 +496,7 @@ if __name__ == '__main__':
     AP = argparse.ArgumentParser()
     AP.add_argument("--output",type=str,default='output',help="Defines the location and name of output directory")
     AP.add_argument("--chkpt_dir",type=str,default='checkpoint',help="Defines the location and name of the checkpoint file")
+    AP.add_argument("--chkpt_interval", default=1024, help="How many steps between checkpoint saves?")
     AP.add_argument("--train_size",type=int,default=-1,help="How many samples do you want to use for training? A small number can be used to help debug/overfit")
     AP.add_argument("--validation_size",type=int,default=-1,help="How many samples do you want to use for validation?")
     AP.add_argument("--frequencies",default=[0.991,0.0266,0.13],type=float, nargs='*',help="Frequencies per class used for reweighting")
@@ -555,6 +557,7 @@ if __name__ == '__main__':
          weights=weights,
          image_dir=parsed.output,
          checkpoint_dir=parsed.chkpt_dir,
+         checkpoint_interval=parsed.chkpt_interval,
          trn_sz=parsed.train_size,
          val_sz=parsed.validation_size,
          loss_type=parsed.loss,
