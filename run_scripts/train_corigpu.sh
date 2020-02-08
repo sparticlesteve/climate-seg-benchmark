@@ -15,10 +15,10 @@ nvalid=-1
 ntest=0
 batch=1
 epochs=64
-prec=16
+prec=32
 grad_lag=1
-scale_factor=0.1
-loss_type=weighted #weighted_mean
+scale_factor=1.0 #0.1
+loss_type=weighted_mean #weighted
 
 # Parse command line options
 while (( "$#" )); do
