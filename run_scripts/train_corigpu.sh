@@ -112,6 +112,7 @@ if [ $ntrain -ne 0 ]; then
         --device "/device:cpu:0" \
         --dtype "float${prec}" \
         --label_id 0 \
+        --disable_imsave \
         --data_format "channels_first" \
         $other_train_opts |& tee out.fp${prec}.lag${grad_lag}.train.run${runid}
         #--disable_checkpoint \
