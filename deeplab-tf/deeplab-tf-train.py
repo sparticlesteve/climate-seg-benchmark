@@ -383,10 +383,10 @@ def main(device, input_path_train, input_path_validation, dummy_data,
                 try:
                     #construct feed dict
                     t_inst_start = time.time()
-                    _, tmp_loss, cur_lr = sess.run([train_op,
-                                                    (loss if per_rank_output else loss_avg),
-                                                    lr],
-                                                   feed_dict={handle: trn_handle})
+                    _, tmp_loss, cur_lr, trn_filenames = sess.run([train_op,
+                                                                   (loss if per_rank_output else loss_avg),
+                                                                   lr, next_elem[3]],
+                                                                  feed_dict={handle: trn_handle})
                     t_inst_end = time.time()
                     if "gpu" in device.lower():
                         mem_used = sess.run(mem_usage_ops)
@@ -414,6 +414,12 @@ def main(device, input_path_train, input_path_validation, dummy_data,
                                     print("memory usage: {:.2f} GB / {:.2f} GB".format(mem_used[0] / 2.0**30, mem_used[1] / 2.0**30))
                                     prev_mem_usage = mem_used[0]
                                 print("REPORT: training loss for step {} (of {}) is {}, time {:.3f}, r_inst {:.3f}, r_peak {:.3f}, lr {:.2g}".format(train_steps, num_steps, train_loss, time.time()-start_time, r_inst, r_peak, cur_lr))
+
+                    # Debugging loss spikes
+                    # Compare batch loss to previous recent losses. If spiking, dump batch file names.
+                    if train_steps > loss_window_size and tmp_loss > 2 * np.mean(recent_losses[:-1]):
+                        print("DEBUG: Loss spike {} previous {} files {}".format(
+                            tmp_loss, np.mean(recent_losses[:-1]), trn_filenames))
 
                     # End of epoch; do the validation phase
                     if train_steps_in_epoch == 0:

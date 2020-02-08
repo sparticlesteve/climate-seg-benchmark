@@ -60,7 +60,7 @@ export HDF5_USE_FILE_LOCKING=FALSE
 #datadir=/global/cscratch1/sd/sfarrell/climate-seg-benchmark/data/climseg-data-duplicated
 datadir=/global/cscratch1/sd/sfarrell/climate-seg-benchmark/data/climseg-data-2020
 scratchdir=${datadir} # no staging
-run_dir=$SCRATCH/climate-seg-benchmark/run_cgpu/run_n${SLURM_NNODES}
+run_dir=$SCRATCH/climate-seg-benchmark/run_cgpu_debug_spikes/run_n${SLURM_NNODES}
 mkdir -p ${run_dir}
 
 # Prepare the run directory
