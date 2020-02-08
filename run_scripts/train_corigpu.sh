@@ -60,7 +60,7 @@ export HDF5_USE_FILE_LOCKING=FALSE
 #datadir=/global/cscratch1/sd/sfarrell/climate-seg-benchmark/data/climseg-data-duplicated
 datadir=/global/cscratch1/sd/sfarrell/climate-seg-benchmark/data/climseg-data-2020
 scratchdir=${datadir} # no staging
-run_dir=$SCRATCH/climate-seg-benchmark/run_cgpu/run_n${SLURM_NNODES}_j${SLURM_JOBID}
+run_dir=$SCRATCH/climate-seg-benchmark/run_cgpu/run_n${SLURM_NNODES}
 mkdir -p ${run_dir}
 
 # Prepare the run directory
@@ -74,6 +74,7 @@ cp ../deeplab-tf/deeplab-tf-train.py ${run_dir}/
 cp ../deeplab-tf/deeplab-tf-inference.py ${run_dir}/
 cp ../deeplab-tf/deeplab_model.py ${run_dir}/
 cd ${run_dir}
+pwd
 
 # Stage data if relevant
 if [ "${scratchdir}" != "${datadir}" ]; then
@@ -89,13 +90,17 @@ fi
 # Run the training
 if [ $ntrain -ne 0 ]; then
     echo "Starting Training"
+    runid=0
+    runfiles=$(ls -latr out.fp${prec}.lag${grad_lag}.train.run* | tail -n1 | awk '{print $9}')
+    if [ ! -z ${runfiles} ]; then
+        runid=$(echo ${runfiles} | awk '{split($1,a,"run"); print a[1]+1}')
+    fi
     srun -u --cpu_bind=cores python -u deeplab-tf-train.py \
         --datadir_train ${scratchdir}/train \
         --train_size ${ntrain} \
         --datadir_validation ${scratchdir}/validation \
         --validation_size ${nvalid} \
         --chkpt_dir checkpoint.fp${prec}.lag${grad_lag} \
-        --disable_checkpoint \
         --epochs $epochs \
         --fs global \
         --loss $loss_type \
@@ -108,7 +113,8 @@ if [ $ntrain -ne 0 ]; then
         --dtype "float${prec}" \
         --label_id 0 \
         --data_format "channels_first" \
-        $other_train_opts |& tee out.fp${prec}.lag${grad_lag}.train
+        $other_train_opts |& tee out.fp${prec}.lag${grad_lag}.train.run${runid}
+        #--disable_checkpoint \
 fi
 
 if [ $ntest -ne 0 ]; then
@@ -128,5 +134,5 @@ if [ $ntest -ne 0 ]; then
         --device "/device:cpu:0" \
         --dtype "float${prec}" \
         --label_id 0 \
-        --data_format "channels_last" |& tee out.fp${prec}.lag${grad_lag}.test
+        --data_format "channels_last" |& tee out.fp${prec}.lag${grad_lag}.test.run${runid}
 fi
