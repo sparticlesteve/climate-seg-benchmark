@@ -371,20 +371,15 @@ def main(device, input_path_train, input_path_validation, dummy_data,
             #  restoring from a checkpoint) so we can count from there
             train_steps = sess.run([global_step])[0]
 
-            #do the training
-            epoch = 1
-            step = 1
-
+            # Start training
+            print('Begin training loop')
             prev_mem_usage = 0
             t_sustained_start = time.time()
             r_peak = 0
-
-            #start training
             start_time = time.time()
-            print('Begin training loop')
             while not sess.should_stop():
 
-                #training loop
+                # Train until OutOfRangeError
                 try:
                     #construct feed dict
                     t_inst_start = time.time()
@@ -401,7 +396,6 @@ def main(device, input_path_train, input_path_validation, dummy_data,
                     train_steps_in_epoch = train_steps%num_steps_per_epoch
                     recent_losses = [ tmp_loss ] + recent_losses[0:loss_window_size-1]
                     train_loss = sum(recent_losses) / len(recent_losses)
-                    step += 1
 
                     r_inst = 1e-12 * flops / (t_inst_end-t_inst_start)
                     r_peak = max(r_peak, r_inst)
@@ -421,9 +415,10 @@ def main(device, input_path_train, input_path_validation, dummy_data,
                                     prev_mem_usage = mem_used[0]
                                 print("REPORT: training loss for step {} (of {}) is {}, time {:.3f}, r_inst {:.3f}, r_peak {:.3f}, lr {:.2g}".format(train_steps, num_steps, train_loss, time.time()-start_time, r_inst, r_peak, cur_lr))
 
-                    #do the validation phase
+                    # End of epoch; do the validation phase
                     if train_steps_in_epoch == 0:
                         end_time = time.time()
+                        epoch = train_steps // num_steps_per_epoch
                         #print epoch report
                         if per_rank_output:
                             print("COMPLETED: rank {}, training loss for epoch {} (of {}) is {:.5f}, time {:.3f}, r_sust {:.3f}".format(comm_rank, epoch, num_epochs, train_loss, time.time() - start_time, 1e-12 * flops * num_steps_per_epoch / (end_time-t_sustained_start)))
@@ -478,9 +473,6 @@ def main(device, input_path_train, input_path_validation, dummy_data,
                                 sess.run(val_init_op, feed_dict={handle: val_handle})
                                 break
 
-                        #reset counters
-                        epoch += 1
-                        step = 0
                         t_sustained_start = time.time()
 
                 except tf.errors.OutOfRangeError:
