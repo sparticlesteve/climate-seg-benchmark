@@ -19,10 +19,16 @@ prec=32
 grad_lag=1
 scale_factor=1.0 #0.1
 loss_type=weighted_mean #weighted
+datadir=/global/cscratch1/sd/sfarrell/climate-seg-benchmark/data/climseg-data-2020
+run_dir=$SCRATCH/climate-seg-benchmark/run_cgpu/run_n${SLURM_NNODES}
 
 # Parse command line options
 while (( "$#" )); do
     case "$1" in
+        --data)
+            datadir=$2
+            shift 2
+            ;;
         --ntrain)
             ntrain=$2
             shift 2
@@ -57,10 +63,7 @@ export OMP_PROC_BIND=spread
 export HDF5_USE_FILE_LOCKING=FALSE
 
 # Setup directories
-#datadir=/global/cscratch1/sd/sfarrell/climate-seg-benchmark/data/climseg-data-duplicated
-datadir=/global/cscratch1/sd/sfarrell/climate-seg-benchmark/data/climseg-data-2020
 scratchdir=${datadir} # no staging
-run_dir=$SCRATCH/climate-seg-benchmark/run_cgpu/run_n${SLURM_NNODES}
 mkdir -p ${run_dir}
 
 # Prepare the run directory

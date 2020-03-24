@@ -19,10 +19,16 @@ epochs=1
 grad_lag=1
 scale_factor=1.0
 loss_type=weighted_mean #weighted
+datadir=/global/cscratch1/sd/sfarrell/climate-seg-benchmark/data/climseg-data-2020
+run_dir=$SCRATCH/climate-seg-benchmark/run_cori/run_n${SLURM_NNODES}_j${SLURM_JOBID}
 
 # Parse command line options
 while (( "$#" )); do
     case "$1" in
+        --data)
+            datadir=$2
+            shift 2
+            ;;
         --ntrain)
             ntrain=$2
             shift 2
@@ -62,12 +68,8 @@ intra_threads=68
 inter_threads=2
 
 # Setup directories
-datadir=/global/cscratch1/sd/sfarrell/climate-seg-benchmark/data/climseg-data-2020
-#datadir=/global/cscratch1/sd/sfarrell/climate-seg-benchmark/data/climseg-data-duplicated
-#datadir=/project/projectdirs/dasrepo/gsharing/climseg-benchmark/climseg-data-small
 scratchdir=$datadir # no staging
 #scratchdir=${DW_PERSISTENT_STRIPED_DeepCAM}/$(whoami)
-run_dir=$SCRATCH/climate-seg-benchmark/run_cori/run_n${SLURM_NNODES}_j${SLURM_JOBID}
 mkdir -p ${run_dir}
 
 # Prepare the run directory
