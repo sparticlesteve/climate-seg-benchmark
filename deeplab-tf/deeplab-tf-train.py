@@ -514,7 +514,7 @@ if __name__ == '__main__':
     AP.add_argument("--trace_dir",type=str,help="Directory where trace files should be written")
     AP.add_argument("--sampling",type=int,help="Target number of pixels from each class to sample")
     AP.add_argument("--scale_factor",default=0.1,type=float,help="Factor used to scale loss.")
-    AP.add_argument("--device", default="/device:gpu:0",help="Which device to count the allocated memory on.")
+    AP.add_argument("--mem_device", default="/device:gpu:0",help="Which device to count the allocated memory on.")
     AP.add_argument("--data_format", default="channels_first",help="Which data format shall be picked [channels_first, channels_last].")
     AP.add_argument("--label_id", type=int, default=0,
                     help="Allows to select a certain label out of a multi-channel labeled data, \
@@ -537,7 +537,7 @@ if __name__ == '__main__':
         horovod = False
         
     #invoke main function
-    main(device=parsed.device,
+    main(device=parsed.mem_device,
          input_path_train=parsed.datadir_train,
          input_path_validation=parsed.datadir_validation,
          dummy_data=parsed.dummy_data,

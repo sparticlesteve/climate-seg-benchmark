@@ -121,7 +121,7 @@ if [ $ntrain -ne 0 ]; then
         --scale_factor $scale_factor \
         --batch $batch \
         --decoder "deconv1x" \
-        --device "/device:cpu:0" \
+        --mem_device "/device:cpu:0" \
         --label_id 0 \
         --intra_threads $intra_threads \
         --inter_threads $inter_threads \

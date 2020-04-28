@@ -112,7 +112,7 @@ if [ $ntrain -ne 0 ]; then
         --scale_factor $scale_factor \
         --batch $batch \
         --decoder "deconv1x" \
-        --device "/device:cpu:0" \
+        --mem_device "/device:gpu:0" \
         --dtype "float${prec}" \
         --label_id 0 \
         --disable_imsave \
