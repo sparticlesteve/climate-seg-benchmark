@@ -1,0 +1,1094 @@
+Running in /global/cscratch1/sd/sfarrell/climate-seg-benchmark/run_cori/run_n512_j29270100
+Scratchdir and datadir is the same, no staging needed!
+Starting Training
+ls: cannot access 'out.fp32.lag1.train.run*': No such file or directory
+Using distributed computation with Horovod: 512 total ranks
+Loading data...
+Num workers: 512
+Local batch size: 1
+Precision: FP32
+Decoder: deconv1x
+Batch normalization: False
+Channels: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
+Loss type: weighted_mean
+Loss weights: [0.0217966  0.81204625 0.16615715]
+Loss scale factor: 1.0
+Output sampling target: None
+Solver Parameters: opt_type: LARC-Adam
+Solver Parameters: learning_rate: 0.0001
+Solver Parameters: gradient_lag: 1
+Num training samples: 4096
+Num validation samples: 4096
+Disable checkpoints: True
+Disable image save: True
+training flops: 7378.113 TF/step
+number of trainable parameters: 43669251 (166.5849723815918 MB)
+Enabling LARC
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+REPORT: training loss for step 1 (of 32) is 0.010613495483994484, time 112.417, r_inst 65.632, r_peak 65.632, lr 0.0001
+REPORT: training loss for step 2 (of 32) is 0.010513474233448505, time 126.400, r_inst 527.655, r_peak 527.655, lr 0.0001
+REPORT: training loss for step 3 (of 32) is 0.019917090112964313, time 140.036, r_inst 541.082, r_peak 541.082, lr 0.0001
+REPORT: training loss for step 4 (of 32) is 0.04522083280608058, time 154.464, r_inst 511.414, r_peak 541.082, lr 0.0001
+REPORT: training loss for step 5 (of 32) is 0.040381357073783875, time 169.243, r_inst 499.234, r_peak 541.082, lr 0.0001
+REPORT: training loss for step 6 (of 32) is 0.03764269438882669, time 180.538, r_inst 653.260, r_peak 653.260, lr 0.0001
+REPORT: training loss for step 7 (of 32) is 0.038659232535532544, time 192.049, r_inst 641.002, r_peak 653.260, lr 0.0001
+REPORT: training loss for step 8 (of 32) is 0.0413875044323504, time 203.454, r_inst 646.939, r_peak 653.260, lr 0.0001
+COMPLETED: training loss for epoch 1 (of 4) is 0.04139, time 203.454, r_sust 290.114
+COMPLETED: evaluation loss for epoch 1 (of 4) is 0.07235
+COMPLETED: evaluation IoU for epoch 1 (of 4) is 0.32866
+REPORT: training loss for step 9 (of 32) is 0.04479800371660127, time 286.570, r_inst 565.352, r_peak 653.260, lr 0.0001
+REPORT: training loss for step 10 (of 32) is 0.04837854392826557, time 303.086, r_inst 446.737, r_peak 653.260, lr 0.0001
+REPORT: training loss for step 11 (of 32) is 0.05563804376870394, time 314.555, r_inst 643.313, r_peak 653.260, lr 0.0001
+REPORT: training loss for step 12 (of 32) is 0.06318293455988169, time 328.953, r_inst 512.447, r_peak 653.260, lr 0.0001
+REPORT: training loss for step 13 (of 32) is 0.06757663693279028, time 340.264, r_inst 652.358, r_peak 653.260, lr 0.0001
+REPORT: training loss for step 14 (of 32) is 0.06336208041757345, time 351.475, r_inst 658.135, r_peak 658.135, lr 0.0001
+REPORT: training loss for step 15 (of 32) is 0.06865444220602512, time 362.784, r_inst 652.469, r_peak 658.135, lr 0.0001
+REPORT: training loss for step 16 (of 32) is 0.07286548092961312, time 374.020, r_inst 656.667, r_peak 658.135, lr 0.0001
+COMPLETED: training loss for epoch 2 (of 4) is 0.07287, time 374.020, r_sust 587.306
+COMPLETED: evaluation loss for epoch 2 (of 4) is 0.06097
+COMPLETED: evaluation IoU for epoch 2 (of 4) is 0.32866
+REPORT: training loss for step 17 (of 32) is 0.0744558997452259, time 444.748, r_inst 543.538, r_peak 658.135, lr 0.0001
+REPORT: training loss for step 18 (of 32) is 0.07368809059262275, time 459.907, r_inst 486.727, r_peak 658.135, lr 0.0001
+REPORT: training loss for step 19 (of 32) is 0.07090985178947448, time 471.213, r_inst 652.612, r_peak 658.135, lr 0.0001
+REPORT: training loss for step 20 (of 32) is 0.06644208133220672, time 482.765, r_inst 638.697, r_peak 658.135, lr 0.0001
+REPORT: training loss for step 21 (of 32) is 0.061552053689956664, time 494.310, r_inst 639.126, r_peak 658.135, lr 0.0001
+REPORT: training loss for step 22 (of 32) is 0.05946129932999611, time 505.826, r_inst 640.707, r_peak 658.135, lr 0.0001
+REPORT: training loss for step 23 (of 32) is 0.058749754726886746, time 517.771, r_inst 617.667, r_peak 658.135, lr 0.0001
+REPORT: training loss for step 24 (of 32) is 0.054739554226398465, time 529.226, r_inst 644.132, r_peak 658.135, lr 0.0001
+COMPLETED: training loss for epoch 3 (of 4) is 0.05474, time 529.226, r_sust 601.967
+COMPLETED: evaluation loss for epoch 3 (of 4) is 0.01471
+COMPLETED: evaluation IoU for epoch 3 (of 4) is 0.34756
+REPORT: training loss for step 25 (of 32) is 0.048805590346455575, time 600.199, r_inst 531.318, r_peak 658.135, lr 0.0001
+REPORT: training loss for step 26 (of 32) is 0.04388244934380055, time 611.874, r_inst 632.003, r_peak 658.135, lr 0.0001
+REPORT: training loss for step 27 (of 32) is 0.039787855744361875, time 623.479, r_inst 635.801, r_peak 658.135, lr 0.0001
+REPORT: training loss for step 28 (of 32) is 0.036710160039365294, time 634.959, r_inst 642.726, r_peak 658.135, lr 0.0001
+REPORT: training loss for step 29 (of 32) is 0.034583868272602555, time 646.397, r_inst 645.050, r_peak 658.135, lr 0.0001
+REPORT: training loss for step 30 (of 32) is 0.03331820070743561, time 657.861, r_inst 643.621, r_peak 658.135, lr 0.0001
+REPORT: training loss for step 31 (of 32) is 0.03222301676869392, time 669.353, r_inst 642.042, r_peak 658.135, lr 0.0001
+REPORT: training loss for step 32 (of 32) is 0.02787931226193905, time 686.766, r_inst 423.736, r_peak 658.135, lr 0.0001
+COMPLETED: training loss for epoch 4 (of 4) is 0.02788, time 686.766, r_sust 587.584
+COMPLETED: evaluation loss for epoch 4 (of 4) is 0.01962
+COMPLETED: evaluation IoU for epoch 4 (of 4) is 0.32866
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done

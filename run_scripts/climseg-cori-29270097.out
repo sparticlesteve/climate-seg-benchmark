@@ -1,0 +1,86 @@
+Running in /global/cscratch1/sd/sfarrell/climate-seg-benchmark/run_cori/run_n8_j29270097
+Scratchdir and datadir is the same, no staging needed!
+Starting Training
+ls: cannot access 'out.fp32.lag1.train.run*': No such file or directory
+Using distributed computation with Horovod: 8 total ranks
+Loading data...
+Num workers: 8
+Local batch size: 1
+Precision: FP32
+Decoder: deconv1x
+Batch normalization: False
+Channels: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15]
+Loss type: weighted_mean
+Loss weights: [0.0217966  0.81204625 0.16615715]
+Loss scale factor: 1.0
+Output sampling target: None
+Solver Parameters: opt_type: LARC-Adam
+Solver Parameters: learning_rate: 0.0001
+Solver Parameters: gradient_lag: 1
+Num training samples: 64
+Num validation samples: 64
+Disable checkpoints: True
+Disable image save: True
+training flops: 115.283 TF/step
+number of trainable parameters: 43669251 (166.5849723815918 MB)
+Enabling LARC
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+Begin training loop
+REPORT: training loss for step 1 (of 32) is 0.015701796859502792, time 106.150, r_inst 1.086, r_peak 1.086, lr 0.0001
+REPORT: training loss for step 2 (of 32) is 0.01589457504451275, time 119.598, r_inst 8.573, r_peak 8.573, lr 0.0001
+REPORT: training loss for step 3 (of 32) is 0.01756584147612254, time 132.693, r_inst 8.804, r_peak 8.804, lr 0.0001
+REPORT: training loss for step 4 (of 32) is 0.02178020030260086, time 146.293, r_inst 8.477, r_peak 8.804, lr 0.0001
+REPORT: training loss for step 5 (of 32) is 0.027608509361743926, time 157.377, r_inst 10.401, r_peak 10.401, lr 0.0001
+REPORT: training loss for step 6 (of 32) is 0.032158639281988144, time 168.524, r_inst 10.343, r_peak 10.401, lr 0.0001
+REPORT: training loss for step 7 (of 32) is 0.034504566873822896, time 180.095, r_inst 9.963, r_peak 10.401, lr 0.0001
+REPORT: training loss for step 8 (of 32) is 0.03644055733457208, time 192.134, r_inst 9.576, r_peak 10.401, lr 0.0001
+COMPLETED: training loss for epoch 1 (of 4) is 0.03644, time 192.135, r_sust 4.800
+COMPLETED: evaluation loss for epoch 1 (of 4) is 0.03542
+COMPLETED: evaluation IoU for epoch 1 (of 4) is 0.32911
+REPORT: training loss for step 9 (of 32) is 0.035558963608410626, time 267.835, r_inst 8.545, r_peak 10.401, lr 0.0001
+REPORT: training loss for step 10 (of 32) is 0.03513258155435324, time 278.850, r_inst 10.467, r_peak 10.467, lr 0.0001
+REPORT: training loss for step 11 (of 32) is 0.03558106068521738, time 289.572, r_inst 10.753, r_peak 10.753, lr 0.0001
+REPORT: training loss for step 12 (of 32) is 0.03530879095196724, time 300.904, r_inst 10.174, r_peak 10.753, lr 0.0001
+REPORT: training loss for step 13 (of 32) is 0.03572618346661329, time 312.483, r_inst 9.956, r_peak 10.753, lr 0.0001
+REPORT: training loss for step 14 (of 32) is 0.03956694137305021, time 324.171, r_inst 9.864, r_peak 10.753, lr 0.0001
+REPORT: training loss for step 15 (of 32) is 0.042530300281941893, time 335.248, r_inst 10.408, r_peak 10.753, lr 0.0001
+REPORT: training loss for step 16 (of 32) is 0.04198078420013189, time 346.695, r_inst 10.072, r_peak 10.753, lr 0.0001
+COMPLETED: training loss for epoch 2 (of 4) is 0.04198, time 346.695, r_sust 9.987
+COMPLETED: evaluation loss for epoch 2 (of 4) is 0.01442
+COMPLETED: evaluation IoU for epoch 2 (of 4) is 0.25263
+REPORT: training loss for step 17 (of 32) is 0.03857777118682861, time 409.524, r_inst 7.439, r_peak 10.753, lr 0.0001
+REPORT: training loss for step 18 (of 32) is 0.03463560361415148, time 420.819, r_inst 10.207, r_peak 10.753, lr 0.0001
+REPORT: training loss for step 19 (of 32) is 0.03396022655069828, time 432.230, r_inst 10.103, r_peak 10.753, lr 0.0001
+REPORT: training loss for step 20 (of 32) is 0.03301973380148411, time 444.029, r_inst 9.771, r_peak 10.753, lr 0.0001
+REPORT: training loss for step 21 (of 32) is 0.03399142362177372, time 455.408, r_inst 10.132, r_peak 10.753, lr 0.0001
+REPORT: training loss for step 22 (of 32) is 0.03668729644268751, time 466.881, r_inst 10.049, r_peak 10.753, lr 0.0001
+REPORT: training loss for step 23 (of 32) is 0.038731906563043594, time 478.457, r_inst 9.960, r_peak 10.753, lr 0.0001
+REPORT: training loss for step 24 (of 32) is 0.03628111034631729, time 489.706, r_inst 10.248, r_peak 10.753, lr 0.0001
+COMPLETED: training loss for epoch 3 (of 4) is 0.03628, time 489.707, r_sust 9.639
+COMPLETED: evaluation loss for epoch 3 (of 4) is 0.03482
+COMPLETED: evaluation IoU for epoch 3 (of 4) is 0.32911
+REPORT: training loss for step 25 (of 32) is 0.03132261335849762, time 550.492, r_inst 8.422, r_peak 10.753, lr 0.0001
+REPORT: training loss for step 26 (of 32) is 0.02961770072579384, time 561.992, r_inst 10.025, r_peak 10.753, lr 0.0001
+REPORT: training loss for step 27 (of 32) is 0.03172402400523424, time 573.435, r_inst 10.075, r_peak 10.753, lr 0.0001
+REPORT: training loss for step 28 (of 32) is 0.03419394008815289, time 585.100, r_inst 9.884, r_peak 10.753, lr 0.0001
+REPORT: training loss for step 29 (of 32) is 0.03517040237784386, time 596.312, r_inst 10.283, r_peak 10.753, lr 0.0001
+REPORT: training loss for step 30 (of 32) is 0.03555645123124122, time 608.422, r_inst 9.519, r_peak 10.753, lr 0.0001
+REPORT: training loss for step 31 (of 32) is 0.034924985654652116, time 619.854, r_inst 10.085, r_peak 10.753, lr 0.0001
+REPORT: training loss for step 32 (of 32) is 0.033190864510834216, time 631.330, r_inst 10.046, r_peak 10.753, lr 0.0001
+COMPLETED: training loss for epoch 4 (of 4) is 0.03319, time 631.330, r_sust 9.757
+COMPLETED: evaluation loss for epoch 4 (of 4) is 0.02390
+COMPLETED: evaluation IoU for epoch 4 (of 4) is 0.24065
+All done
+All done
+All done
+All done
+All done
+All done
+All done
+All done
