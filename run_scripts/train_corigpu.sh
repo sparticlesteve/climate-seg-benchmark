@@ -20,7 +20,6 @@
 do_stage=false
 ntrain=-1
 nvalid=-1
-ntest=0
 batch=1
 epochs=64
 prec=32
@@ -43,10 +42,6 @@ while (( "$#" )); do
             ;;
         --nvalid)
             nvalid=$2
-            shift 2
-            ;;
-        --ntest)
-            ntest=$2
             shift 2
             ;;
         --epochs)
@@ -82,7 +77,6 @@ cp ../utils/tracehook.py ${run_dir}/
 cp ../utils/common_helpers.py ${run_dir}/
 cp ../utils/data_helpers.py ${run_dir}/
 cp ../deeplab-tf/deeplab-tf-train.py ${run_dir}/
-cp ../deeplab-tf/deeplab-tf-inference.py ${run_dir}/
 cp ../deeplab-tf/deeplab_model.py ${run_dir}/
 cd ${run_dir}
 pwd
@@ -90,7 +84,7 @@ pwd
 # Stage data if relevant
 if [ "${scratchdir}" != "${datadir}" ]; then
     if $do_stage; then
-        cmd="srun --mpi=pmi2 -N ${SLURM_NNODES} -n ${SLURM_NNODES} -c 80 ./stage_in_parallel.sh ${datadir} ${scratchdir} ${ntrain} ${nvalid} ${ntest}"
+        cmd="srun --mpi=pmi2 -N ${SLURM_NNODES} -n ${SLURM_NNODES} -c 80 ./stage_in_parallel.sh ${datadir} ${scratchdir} ${ntrain} ${nvalid} 0"
         echo ${cmd}
         ${cmd}
     fi
@@ -127,24 +121,4 @@ if [ $ntrain -ne 0 ]; then
         --data_format "channels_first" \
         $other_train_opts |& tee out.fp${prec}.lag${grad_lag}.train.run${runid}
         #--disable_checkpoint \
-fi
-
-if [ $ntest -ne 0 ]; then
-    echo "Starting Testing"
-    srun -u --cpu_bind=cores python -u deeplab-tf-inference.py \
-        --datadir_test ${scratchdir}/test \
-        --chkpt_dir checkpoint.fp${prec}.lag${grad_lag} \
-        --test_size ${ntest} \
-        --output_graph deepcam_inference.pb \
-        --output output_test_5 \
-        --fs "local" \
-        --loss $loss_type \
-        --model "resnet_v2_50" \
-        --scale_factor $scale_factor \
-        --batch $batch \
-        --decoder "deconv1x" \
-        --device "/device:cpu:0" \
-        --dtype "float${prec}" \
-        --label_id 0 \
-        --data_format "channels_last" |& tee out.fp${prec}.lag${grad_lag}.test.run${runid}
 fi
