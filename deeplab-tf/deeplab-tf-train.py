@@ -494,15 +494,15 @@ if __name__ == '__main__':
     AP.add_argument("--frequencies",default=[0.991,0.0266,0.13],type=float, nargs='*',help="Frequencies per class used for reweighting")
     AP.add_argument("--downsampling",default=1,type=int,help="Downsampling factor for image resolution reduction.")
     AP.add_argument("--downsampling_mode",default="scale",type=str,help="Which mode to use [scale, center-crop].")
-    AP.add_argument("--loss",default="weighted",choices=["weighted","weighted_mean","focal"],type=str, help="Which loss type to use. Supports weighted, focal [weighted]")
+    AP.add_argument("--loss",default="weighted_mean",choices=["weighted","weighted_mean","focal"],type=str, help="Which loss type to use. Supports weighted, weighted_mean, focal [weighted_mean]")
     AP.add_argument("--datadir_train",type=str,help="Path to training data")
     AP.add_argument("--datadir_validation",type=str,help="Path to validation data")
     AP.add_argument("--dummy_data", action="store_true", help="Use synthetic data instead of real data")
     AP.add_argument("--channels",default=[0,1,2,3,4,5,6,7,8,9,10,11,12,13,14,15],type=int, nargs='*',help="Channels from input images fed to the network. List of numbers between 0 and 15")
     AP.add_argument("--fs",type=str,default="local",help="File system flag: global or local are allowed [local]")
     AP.add_argument("--optimizer",action=StoreDictKeyPair)
-    AP.add_argument("--model",type=str,default="resnet_v2_101",help="Pick base model [resnet_v2_50, resnet_v2_101].")
-    AP.add_argument("--decoder",type=str,default="bilinear",help="Pick decoder [bilinear,deconv,deconv1x]")
+    AP.add_argument("--model",type=str,default="resnet_v2_50",help="Pick base model [resnet_v2_50, resnet_v2_101].")
+    AP.add_argument("--decoder",type=str,default="deconv1x",help="Pick decoder [bilinear,deconv,deconv1x]")
     AP.add_argument("--epochs",type=int,default=150,help="Number of epochs to train")
     AP.add_argument("--batch",type=int,default=1,help="Batch size")
     AP.add_argument("--use_batchnorm",action="store_true",help="Set flag to enable batchnorm")
@@ -516,7 +516,7 @@ if __name__ == '__main__':
     AP.add_argument("--scale_factor",default=0.1,type=float,help="Factor used to scale loss.")
     AP.add_argument("--device", default="/device:gpu:0",help="Which device to count the allocated memory on.")
     AP.add_argument("--data_format", default="channels_first",help="Which data format shall be picked [channels_first, channels_last].")
-    AP.add_argument("--label_id", type=int, default=None,
+    AP.add_argument("--label_id", type=int, default=0,
                     help="Allows to select a certain label out of a multi-channel labeled data, \
                     where each channel presents a different label (e.g. for fuzzy labels). \
                     If set to None, the selection will be randomized [None].")
