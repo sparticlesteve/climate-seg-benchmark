@@ -25,7 +25,6 @@ epochs=64
 prec=32
 grad_lag=1
 scale_factor=1.0 #0.1
-loss_type=weighted_mean #weighted
 datadir=/global/cscratch1/sd/sfarrell/climate-seg-benchmark/data/climseg-data-2020
 run_dir=$SCRATCH/climate-seg-benchmark/run_cori/run_n${SLURM_NNODES}_j${SLURM_JOBID}
 
@@ -110,15 +109,11 @@ if [ $ntrain -ne 0 ]; then
         --fs global \
         --loss $loss_type \
         --optimizer opt_type=LARC-Adam,learning_rate=0.0001,gradient_lag=${grad_lag} \
-        --model "resnet_v2_50" \
         --scale_factor $scale_factor \
         --batch $batch \
-        --decoder "deconv1x" \
         --mem_device "/device:gpu:0" \
         --dtype "float${prec}" \
-        --label_id 0 \
         --disable_imsave \
         --data_format "channels_first" \
         $other_train_opts |& tee out.fp${prec}.lag${grad_lag}.train.run${runid}
-        #--disable_checkpoint \
 fi
