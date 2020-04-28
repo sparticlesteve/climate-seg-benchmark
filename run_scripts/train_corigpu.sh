@@ -8,6 +8,14 @@
 #SBATCH -t 4:00:00
 #SBATCH -o %x-%j.out
 
+#
+# This is an example slurm batch script for running this benchmark on Cori GPU.
+# This script takes optional arguments which are forwarded to the primary
+# benchmark script, and can be submitted as follows:
+#
+# > sbatch -n 8 train_corigpu.sh --ntrain 64 --nvalid 64 --epochs 4
+#
+
 # Job parameters
 do_stage=false
 ntrain=-1

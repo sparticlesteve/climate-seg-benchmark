@@ -6,8 +6,13 @@
 #SBATCH -d singleton
 #SBATCH -o %x-%j.out
 
-##SBATCH -S 2
-##DW persistentdw name=DeepCAM
+#
+# This is an example slurm batch script for running this benchmark on Cori KNL.
+# This script takes optional arguments which are forwarded to the primary
+# benchmark script, and can be submitted as follows:
+#
+# > sbatch -N 8 train_cori.sh --ntrain 64 --nvalid 64 --epochs 4
+#
 
 # Job parameters
 do_stage=false
