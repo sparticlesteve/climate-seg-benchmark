@@ -21,6 +21,12 @@ https://app.globus.org/file-manager?origin_id=0b226e2c-4de0-11ea-971a-021304b0cc
 The dataset folder contains a README with some technical description of the
 dataset and an All-Hist folder containing all of the data files.
 
+Unfortunately we don't yet have the dataset split into train/val/test nor a
+recommended procedure for doing the split yourself. You can for now do uniform
+splitting using a script similar to what is here:
+
+https://gist.github.com/sparticlesteve/8a3e81a31e89fd1cccc81a3fae3fcf2d
+
 ### Previous dataset for ECP Annual Meeting 2019
 
 This is a smaller dataset (~200GB total) available to get things started.
