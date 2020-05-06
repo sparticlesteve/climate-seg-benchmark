@@ -5,6 +5,11 @@ Exascale Deep Learning for Climate Analytics codebase here:
 https://github.com/azrael417/ClimDeepLearn, and the paper:
 https://arxiv.org/abs/1810.01993
 
+**Important note** This branch of the repository is a special NERSC benchmark
+version of the application for future procurements. The documentation is
+therefore modified accordingly. See the master version of the repo for the
+complete benchmark details.
+
 ## Dataset
 
 The dataset for this benchmark comes from CAM5 [1] simulations and is hosted at
@@ -13,6 +18,34 @@ NERSC. The samples are stored in HDF5 files with input images of shape
 three target classes (background, atmospheric river, tropical cycline) and were
 produced with TECA [2].
 
+### Small benchmark data for N10 vendors
+
+For this benchmark we are providing a small subset of the full dataset
+which can be downloaded and duplicated to a desired size for running. There
+are 512 input files hosted at NERSC (31GB), available locally at
+
+`/project/projectdirs/m888/www/nersc10/benchmark_data/n10-climseg-benchmark-data`
+
+and available via http at
+
+http://portal.nersc.gov/project/m888/nersc10/benchmark_data/n10-climseg-benchmark-data
+
+Once you've downloaded this data, we provide a script which will duplicate it
+to an expanded size of 4096 files for training, and 4096 files for vaildation.
+The expanded size of the dataset is 500GB. The script is at
+[run_scripts/install_data.sh](//github.com/sparticlesteve/climate-seg-benchmark/blob/n10-benchmark/run_scripts/install_data.sh)
+
+and should be run as follows, passing in the downloaded file path and the
+target data installation path:
+
+`./install_data.sh DOWNLOADED_DATA_DIR INSTALLATION_TARGET_DIR`
+
+Note that this procedure of preparing the data means that the benchmark
+application will not show good convergence results. However, this setup is
+useful for measuring system performance for a fixed training workload.
+
+### Current full benchmark dataset
+
 The current recommended way to get the data is to use GLOBUS and the following
 globus endpoint:
 
@@ -20,17 +53,6 @@ https://app.globus.org/file-manager?origin_id=0b226e2c-4de0-11ea-971a-021304b0cc
 
 The dataset folder contains a README with some technical description of the
 dataset and an All-Hist folder containing all of the data files.
-
-### Previous dataset for ECP Annual Meeting 2019
-
-This is a smaller dataset (~200GB total) available to get things started.
-It is hosted via Globus:
-
-https://app.globus.org/file-manager?origin_id=bf7316d8-e918-11e9-9bfc-0a19784404f4&origin_path=%2F
-
-and also available via https:
-
-https://portal.nersc.gov/project/dasrepo/deepcam/climseg-data-small/
 
 ## How to run the benchmark
 
