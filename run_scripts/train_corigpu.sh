@@ -107,7 +107,6 @@ if [ $ntrain -ne 0 ]; then
         --chkpt_dir checkpoint.fp${prec}.lag${grad_lag} \
         --epochs $epochs \
         --fs global \
-        --loss $loss_type \
         --optimizer opt_type=LARC-Adam,learning_rate=0.0001,gradient_lag=${grad_lag} \
         --scale_factor $scale_factor \
         --batch $batch \
